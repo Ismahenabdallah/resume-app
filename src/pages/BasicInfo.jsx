@@ -6,24 +6,41 @@ import { useDispatch } from 'react-redux';
 import { AddToBasic_info } from '../redux/actions/action';
 export default function BasicInfo() {
     //const getbasicinfo = useSelector((state)=> state.Reducer.BasicInfo);
- 
+    const [avatar,setavatar]=useState('')
+   
     function getFormValues() {
         const storedValues = localStorage.getItem('form');
+
         if (!storedValues)
             return {
-                image:'',
+               avatar,
+                adresse:"",
                 description:'',
-                namel: "",
+                portfolio: "",
                 profession: "",
                 LinkedinLink: "",
                 GithubLink: "",
                 phone: "",
-                email: ""
+                email: "",
+             
+            
             };
         return JSON.parse(storedValues);
     }
     const [form, setForm] = useState(getFormValues)
-    //const [avatar, setavatar] = useState('')
+    const  imageHandler = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            if(reader.readyState === 2 ){
+                setavatar(reader.result)
+              }
+           
+          }
+         
+        reader.readAsDataURL(e.target.files[0])
+      }
+   
+   
     /*const [form, setForm] = useState({
         namel:"",
         profession:"",
@@ -44,14 +61,16 @@ export default function BasicInfo() {
         //
         //})
         setForm((previousValues) => ({
-            ...previousValues,
+            ...previousValues,avatar,
             [e.target.name]: e.target.value,
+          
         }));
 
     }
+  
     const onSubmit = (e) => {
         e.preventDefault();
-        //var formData = new FormData()
+    //var formData = new FormData()
    // formData.append('file', avatar)
    // formData.append('description', form.description)
    // formData.append('profession', form.profession)
@@ -63,7 +82,7 @@ export default function BasicInfo() {
     
                 
         dispatch(AddToBasic_info(form))
-     
+        console.log(form)
     }
 
     return (
@@ -77,10 +96,11 @@ export default function BasicInfo() {
                 <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={12}>
                
-                        <Input label="image"  name="file" type="file"  placeholder="Enter Your Image" onChange={onChangeHandler}   fullWidth />
+                        <Input label="image"   type="file"  placeholder="Enter Your Image" onChange={imageHandler}   fullWidth />
                     </Grid>
+                   
                     <Grid item xs={6}>
-                        <Input label="Name" value={form.namel} name="namel" type="text" placeholder="Enter Your Name" onChange={onChangeHandler} fullWidth />
+                        <Input label="Adresse" value={form.adresse} name="adresse" type="text" placeholder="Enter Your Adresse" onChange={onChangeHandler} fullWidth />
                     </Grid>
                     <Grid item xs={6}>
                        
@@ -93,10 +113,13 @@ export default function BasicInfo() {
                         <Input label="Github Link" type="text" name="GithubLink" value={form.GithubLink}  placeholder="Enter Your Github Profile Link" onChange={onChangeHandler} fullWidth />
                     </Grid>
                     <Grid item xs={6}>
-                        <Input label="Email" type="email" name="email" placeholder="Enter Your Email" onChange={onChangeHandler} fullWidth />
+                        <Input label="Portfolio" value={form.portfolio} name="portfolio" type="text" placeholder="Enter Your  Portfolio" onChange={onChangeHandler} fullWidth />
                     </Grid>
                     <Grid item xs={6}>
-                        <Input label="Phone" type="tel" name="phone" placeholder="Enter Your Phone Number " onChange={onChangeHandler} fullWidth />
+                        <Input label="Email" type="email" name="email" placeholder="Enter Your Email" value={form.email} onChange={onChangeHandler} fullWidth />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Input label="Phone" type="tel" name="phone" placeholder="Enter Your Phone Number " value={form.phone}onChange={onChangeHandler} fullWidth />
                     </Grid>
                     <Grid item xs={6}>
                         <Button type="submit" variant="contained">Save</Button>

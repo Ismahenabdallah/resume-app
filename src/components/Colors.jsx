@@ -4,9 +4,11 @@ import ReactToPrint from "react-to-print";
 import { ArrowDown } from "react-feather";
 import EditorBasicInfo from '../context/EditorBasicInfo';
 import { useSelector } from 'react-redux';
+import EditorWork from '../context/EditorWork';
 export default function Colors() {
     const getbasicinfo = useSelector((state)=> state.Reducer.BasicInfo);
     const reducer= useSelector((state)=> state.Reducer); 
+    const getwork = useSelector((state) => state.Reducer.workexp);
     const colors = ["#D65DB1", "#FF6F91", "#FF9671", "#FFC75F" , "#42b883"];
     const [activeColor, setActiveColor] = useState(colors[0]);
     const resumeRef = useRef();
@@ -39,9 +41,12 @@ export default function Colors() {
         </div> 
         </div>
         <div className="editor">
-        {reducer && getbasicinfo ? 
+        {reducer || getbasicinfo ||getwork ? 
       <>
        <EditorBasicInfo ref={resumeRef}  activeColor={activeColor}/>
+       <EditorWork ref={resumeRef}  activeColor={activeColor}/>
+      
+     
       </> 
       : ''}
        
@@ -80,9 +85,10 @@ const Container = styled.div`
 
     
   .editor{
-    margin:3% 3% 10% 10% ; 
-    box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.1);
-    width:180vh;
+    margin:3% 3% 10% 5% ; 
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    width:200vh;
+    height:auto;
   }
   
 

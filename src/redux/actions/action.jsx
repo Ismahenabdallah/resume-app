@@ -1,15 +1,22 @@
-import { Basic_info, Certificates, Eductaion, Other, Projects, Work } from "../types";
+import { Basic_info, Certificates, Eductaion, Other, Projects, Remove, Work } from "../types";
 export function AddToBasic_info(BasicInfo){
     return{
         type:Basic_info,
         BasicInfo
     }  
 }
-export function AddToWork(workexp ){
+export function AddToWork(workexp){
     return{
         type:Work,
-        workexp
+        workexp,
+    
     }  
+}
+export function RemoveFunction (index){
+    return {
+        type:Remove,
+        index
+    }
 }
 export function AddToProjects(form ){
     return{
